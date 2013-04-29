@@ -1,12 +1,6 @@
 #!/usr/bin/env ruby
 
 
-test_vfl = %Q{V:|-25-[showTile(192)]-25-[border(1px, #dcdcdc)]-30-|
-|-20-[showTile(340)]-20-[metaData]-20-|
-[text(50)]-11-[buttonClose]-10-|
-V:[buttonClose]-10-|
-}
-
 class UIView
     # r means right, b means bottom
     # xref means reference object for x. e.g. [v1]-10-[v2] makes v2.xref=v1, v2.x=10 if v1's size is unknown
@@ -274,8 +268,14 @@ def objc_gen
     code
 end
 
-if ARGV[0]=="-f"
-    path = ARGV[1]
+
+def str2str(vfl)
+    parse(vfl)
+    construct_list
+    objc_gen
+end
+
+def update_file(path)
     start = "\/\/ \-\-\- BEGINNING OF"
     finish = "END OF CODE GENERATED FROM VFL ---\n"
     vfl_start = "/*\n"
@@ -295,16 +295,16 @@ if ARGV[0]=="-f"
             i_vfl_end = code.index(vfl_finish, i_vfl_start)
             puts "vfl: #{i_vfl_start} - #{i_vfl_end}"
             vfl =  code[i_vfl_start+vfl_start.length..i_vfl_end-1]
-            parse(vfl.strip)
-            construct_list
-            code[i_start..i_finish+finish.length-1] = objc_gen
+            code[i_start..i_finish+finish.length-1] = str2str(vfl.strip)
         end
         File.open(path, "w") do |f|
             f.write(code)
         end
     end
+end
+
+if ARGV[0]=="-f"
+    update_file(ARGV[1])
 else
-    parse(ARGV[0])
-    construct_list
-    puts objc_gen
+    puts str2str(ARGV[0])
 end
