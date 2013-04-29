@@ -14,13 +14,13 @@ Then restart Xcode. Click Xcode->services from top menu, you should be able to s
 
 To start a new VFL based code block, enter something like below in the right place in your code:
 
-   UIView* superview = someView;
-   // --- VFL
-   /*
-     |-10-[someElement]-10-|
-     V:|-5-[someElement(100)]
+    UIView* superview = someView;
+    // --- VFL
+    /*
+        |-10-[someElement]-10-|
+        V:|-5-[someElement(100)]
     */
-   // VFL ---
+    // VFL ---
 
 (Note: the first line and the last line are important.)
 
@@ -52,4 +52,29 @@ The rule of thumb is that there can be 1 and only 1 flexible element in 1 dimens
 |-5-[A(>0)]-5-[B(>0)]-5-| is wrong because it is unclear on how to assign the widths for A and B.
 
 
+Variables and constants can be used to replace the numbers, e.g. |-margin-[button(width)]
+
+
+Frame overriding
+================
+
+Unlike Cocoa Autolayout, vfl2objc allows you to override the frame of an element before or after the generated code block.
+
+E.g. you can do
+
+    labelA.text = @"hi";
+    [labelA sizeToFit];
+    // generated code based on |-[labelA]-10-[itemB] 
+
+Or
+
+    // generated code based on [itemX(100)]
+    CenterViewX(itemX); // assuming that CenterViewX method makes itemX horizontally centered in its superview
+
+But this will not work:
+
+    // generated code based on |[itemX]-[itemY(100)]
+    [itemX setWidth:100];
+
+because itemY's position depends on itemX's frame, so itemX's setWidth call must go before the generated code block.
 
