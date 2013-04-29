@@ -186,8 +186,8 @@ end
 def objc_gen
     code = "// --- VFL GENERATED CODE ---\n"
     code << "/*\n"
-    code << PARAMS[:VFL].split("\n").collect{|l| l.strip}.join("\n")
-    code << "\n*/\n{\n"
+    code << PARAMS[:VFL].split("\n").collect{|l| " "+l.strip}.join("\n")
+    code << "\n */\n{\n"
     code << "    // You need to predefine superview before this.\n\n    CGRect frame;\n\n"
     arh = "" # horizontal autoresizing mask
     arv = ""

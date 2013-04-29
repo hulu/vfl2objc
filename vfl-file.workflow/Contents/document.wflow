@@ -51,7 +51,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>tell application "Xcode"	-- activate	-- tell application "System Events" to keystroke "s" using {command down}	-- delay 3	set CurrentActiveDocument to document 1 whose name ends with (word -1 of (get name of window 1))	set currentFilePath to path of CurrentActiveDocumentend tell</string>
+					<string>tell application "Xcode"	set CurrentActiveDocument to document 1 whose name ends with (word -1 of (get name of window 1))	set currentFilePath to path of CurrentActiveDocumentend tell</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -105,7 +105,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.500000:829.000000</string>
+				<string>309.500000:520.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>
@@ -275,113 +275,9 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.500000:516.000000</string>
+				<string>309.500000:207.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/English.lproj/main.nib</string>
-			</dict>
-			<key>isViewVisible</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>action</key>
-			<dict>
-				<key>AMAccepts</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Optional</key>
-					<true/>
-					<key>Types</key>
-					<array>
-						<string>com.apple.applescript.object</string>
-					</array>
-				</dict>
-				<key>AMActionVersion</key>
-				<string>1.0.2</string>
-				<key>AMApplication</key>
-				<array>
-					<string>Automator</string>
-				</array>
-				<key>AMParameterProperties</key>
-				<dict>
-					<key>source</key>
-					<dict/>
-				</dict>
-				<key>AMProvides</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Types</key>
-					<array>
-						<string>com.apple.applescript.object</string>
-					</array>
-				</dict>
-				<key>ActionBundlePath</key>
-				<string>/System/Library/Automator/Run AppleScript.action</string>
-				<key>ActionName</key>
-				<string>Run AppleScript</string>
-				<key>ActionParameters</key>
-				<dict>
-					<key>source</key>
-					<string>tell application "Xcode"	activate	delay 3	tell application "System Events"		-- select all		keystroke "a" using {command down}		-- correct indentation		keystroke "i" using {control down}		-- save file		keystroke "s" using {control down}	end tellend tell</string>
-				</dict>
-				<key>BundleIdentifier</key>
-				<string>com.apple.Automator.RunScript</string>
-				<key>CFBundleVersion</key>
-				<string>1.0.2</string>
-				<key>CanShowSelectedItemsWhenRun</key>
-				<false/>
-				<key>CanShowWhenRun</key>
-				<true/>
-				<key>Category</key>
-				<array>
-					<string>AMCategoryUtilities</string>
-				</array>
-				<key>Class Name</key>
-				<string>RunScriptAction</string>
-				<key>Disabled</key>
-				<false/>
-				<key>InputUUID</key>
-				<string>26F96DA9-31C1-4D5A-B54F-BCB280C3BAC3</string>
-				<key>Keywords</key>
-				<array>
-					<string>Run</string>
-				</array>
-				<key>OutputUUID</key>
-				<string>49D289B5-632F-47EB-9BAB-E67AE4B96728</string>
-				<key>UUID</key>
-				<string>1B3E0217-4627-46A6-B6E1-CA65AF0E4D8D</string>
-				<key>UnlocalizedApplications</key>
-				<array>
-					<string>Automator</string>
-				</array>
-				<key>arguments</key>
-				<dict>
-					<key>0</key>
-					<dict>
-						<key>default value</key>
-						<string>on run {input, parameters}
-	
-	(* Your script goes here *)
-	
-	return input
-end run</string>
-						<key>name</key>
-						<string>source</string>
-						<key>required</key>
-						<string>0</string>
-						<key>type</key>
-						<string>0</string>
-						<key>uuid</key>
-						<string>0</string>
-					</dict>
-				</dict>
-				<key>isViewVisible</key>
-				<true/>
-				<key>location</key>
-				<string>309.500000:333.000000</string>
-				<key>nibPath</key>
-				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<true/>
@@ -395,13 +291,6 @@ end run</string>
 			<string>5B768221-CAB7-45F7-BC48-75EE910D241E - 5B768221-CAB7-45F7-BC48-75EE910D241E</string>
 			<key>to</key>
 			<string>53B70527-05EB-4658-8A82-3FC20B504DF1 - 53B70527-05EB-4658-8A82-3FC20B504DF1</string>
-		</dict>
-		<key>BDBD06A9-E346-47B2-AD4F-4556A064C848</key>
-		<dict>
-			<key>from</key>
-			<string>53B70527-05EB-4658-8A82-3FC20B504DF1 - 53B70527-05EB-4658-8A82-3FC20B504DF1</string>
-			<key>to</key>
-			<string>1B3E0217-4627-46A6-B6E1-CA65AF0E4D8D - 1B3E0217-4627-46A6-B6E1-CA65AF0E4D8D</string>
 		</dict>
 	</dict>
 	<key>workflowMetaData</key>
