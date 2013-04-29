@@ -105,7 +105,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>437.500000:829.000000</string>
+				<string>309.500000:829.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>
@@ -275,7 +275,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>437.500000:516.000000</string>
+				<string>309.500000:516.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>
@@ -323,12 +323,7 @@ end run</string>
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>tell application "Xcode"	activate	set currentFile to (word -1 of (get name of window 1))	tell application "System Events"
-	    -- reload the current file		keystroke "o" using {command down, shift down}		keystroke currentFile		keystroke return
-		-- select all		keystroke "a" using {command down}
-		-- correct indentation		keystroke "i" using {control down}
-		-- save file
-		keystroke "s" using {control down}	end tellend tell</string>
+					<string>tell application "Xcode"	activate	delay 3	tell application "System Events"		-- select all		keystroke "a" using {command down}		-- correct indentation		keystroke "i" using {control down}		-- save file		keystroke "s" using {control down}	end tellend tell</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -381,12 +376,10 @@ end run</string>
 						<string>0</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>437.500000:333.000000</string>
+				<string>309.500000:333.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>
@@ -396,14 +389,14 @@ end run</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>BE5A22CB-5082-4754-83B3-B8D1082E9A0E</key>
+		<key>255FAE28-A85E-4CA2-B8B8-09BBD7AD7150</key>
 		<dict>
 			<key>from</key>
 			<string>5B768221-CAB7-45F7-BC48-75EE910D241E - 5B768221-CAB7-45F7-BC48-75EE910D241E</string>
 			<key>to</key>
 			<string>53B70527-05EB-4658-8A82-3FC20B504DF1 - 53B70527-05EB-4658-8A82-3FC20B504DF1</string>
 		</dict>
-		<key>CA62F913-98FD-4783-8F8D-37A91A72BF7B</key>
+		<key>BDBD06A9-E346-47B2-AD4F-4556A064C848</key>
 		<dict>
 			<key>from</key>
 			<string>53B70527-05EB-4658-8A82-3FC20B504DF1 - 53B70527-05EB-4658-8A82-3FC20B504DF1</string>
