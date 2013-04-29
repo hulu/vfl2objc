@@ -22,12 +22,13 @@ To start a new VFL based code block, enter something like below in the right pla
     */
     // VFL ---
 
-(Note: the first line and the last line are important.)
+Note: the first line and the last line are important. The final "VFL ---" must be followed by a line break(\n).
 
-And then click vfl-file from the service menu. And the VFL block you entered will expand to a full code block.
+And then save the file (cmd+s), click vfl-file from the service menu. And the VFL block you entered will expand to a full code block.
 
-Each time after editing something in the VFL section, also run the vfl-file service, so the code will get updated.
+Each time after editing something in the VFL section, also hit cmd+s and run the vfl-file service, so the code will get updated.
 
+Hint: you can add a keyboard shortcut to the vfl-file menu in System Preference -> Keyboard -> Keyboard Shortcuts
 
 Rules
 =====
