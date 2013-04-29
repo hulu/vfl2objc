@@ -270,6 +270,10 @@ end
 
 
 def str2str(vfl)
+    PARAMS[:VFL] = ""
+    HASH.clear
+    LIST.clear
+
     parse(vfl)
     construct_list
     objc_gen
