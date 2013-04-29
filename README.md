@@ -79,3 +79,26 @@ But this will not work:
 
 because itemY's position depends on itemX's frame, so itemX's setWidth call must go before the generated code block.
 
+
+Experimenting
+=============
+
+To experiment with this tool, you can just call: vfl2objc.rb "some vfl code" on command line
+
+E.g.
+
+    vfl2objc.rb "|-10-[button]
+    V:[button]-|"
+
+And see the command line output.
+
+
+Further integration
+===================
+
+Other than manually triggering the script with Mac Service, you can consider to integrate VFL code generation into pre-build script.
+
+To do this:
+1 In Xcode Toolbar, choose your scheme and edit your scheme. (If you use git, you may want to go to "manage scheme" and make your scheme "shared" first, so the scheme config will be in your git repo)
+2 Inside scheme editor, expand "Build", and add a pre-action
+3 Use whatever scripting language to create a script that loops through all your .m files, and call "vfl2objc.rb -f {file_path}"
