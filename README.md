@@ -8,7 +8,7 @@ Usage
 =====
 
 First set it up by running:
-    sudo setup.py
+    sudo setup.rb
 
 Then restart Xcode. Click Xcode->services from top menu, you should be able to see vfl-file
 
