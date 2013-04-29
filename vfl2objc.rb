@@ -184,7 +184,7 @@ def construct_list
 end
 
 def objc_gen
-    code = "// --- BEGINNING OF CODE GENERATED FROM VFL ---\n"
+    code = "// --- VFL GENERATED CODE ---\n"
     code << "/*\n"
     code << PARAMS[:VFL]
     code << "\n*/\n{\n"
@@ -276,8 +276,8 @@ def str2str(vfl)
 end
 
 def update_file(path)
-    start = "\/\/ \-\-\- BEGINNING OF"
-    finish = "END OF CODE GENERATED FROM VFL ---\n"
+    start = "\/\/ \-\-\- VFL"
+    finish = "VFL \-\-\-\n"
     vfl_start = "/*\n"
     vfl_finish = "*/"
     last_i_finish = 0
