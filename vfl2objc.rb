@@ -12,17 +12,6 @@ class UIView
     # xref means reference object for x. e.g. [v1]-10-[v2] makes v2.xref=v1, v2.x=10 if v1's size is unknown
     attr_accessor :name, :x, :y, :r, :b, :w, :h, :xref, :yref, :rref, :bref, :added_to_list
 
-    def dynamic_size?
-        # returns true if size can be figured out dynamically
-        sizable_things = ["button", "label", "search", "logo", "icon", "image", "text"]
-        sizable_things.each do |thing|
-            if self.name.downcase.index(thing)
-                return true
-            end
-        end
-        return false
-    end
-
     def code_for_x
         return "#{self.xref.to_s.length>0 ? "CGRectGetMaxX(#{self.xref}.frame) + " : ""}#{self.x}"
     end
@@ -115,7 +104,7 @@ def parse(vfl)
                             position = position + " + " + view.w
                         end
                         # puts "#{element} does have a width: #{$2}, position becomes #{position}."
-                    elsif (not $2) and view.dynamic_size? and exists(position)
+                    elsif (not $2) and exists(position)
                         ref = view.name
                         position = "0"
                         # puts "#{element} doesn't have a width, position becomes 0 and ref becomes #{ref}."
@@ -136,7 +125,7 @@ def parse(vfl)
                         if exists(position)
                             position = position + " + " + $2
                         end
-                    elsif (not $2) and view.dynamic_size? and exists(position)
+                    elsif (not $2) and exists(position)
                         ref = view.name
                         position = "0"
                     else
@@ -158,7 +147,7 @@ def parse(vfl)
             treat_element.call(element, true)
         end
     end
-    # puts HASH
+    puts "hash:\n#{HASH}"
 end
 
 def add_to_list(position, view)
@@ -230,11 +219,11 @@ def objc_gen
             end
             if exists(view.x)
                 code << "frame.origin.x = #{view.code_for_x};\n// You need to set frame.size.width\n"
-                arh = view.dynamic_size? ? "UIViewAutoresizingFlexibleRightMargin" : "?"
+                arh = "UIViewAutoresizingFlexibleRightMargin"
             end
             if exists(view.r)
                 code << "// You need to set frame.size.width\nframe.origin.x = #{view.code_for_right} - frame.size.width;\n"
-                arh = view.dynamic_size? ? "UIViewAutoresizingFlexibleLeftMargin" : "?"
+                arh = "UIViewAutoresizingFlexibleLeftMargin"
             end
             if arh.length==0
                 code << "// You need to set frame.size.width\n// You need to set frame.origin.x\n"
@@ -262,11 +251,11 @@ def objc_gen
             end
             if exists(view.y)
                 code << "frame.origin.y = #{view.code_for_y};\n// You need to set frame.size.height\n"
-                arv = view.dynamic_size? ? "UIViewAutoresizingFlexibleBottomMargin" : "?"
+                arv = "UIViewAutoresizingFlexibleBottomMargin"
             end
             if exists(view.b)
                 code << "// You need to set frame.size.height\nframe.origin.y = #{view.code_for_bottom} - frame.size.height;\n"
-                arv = view.dynamic_size? ? "UIViewAutoresizingFlexibleTopMargin" : "?"
+                arv = "UIViewAutoresizingFlexibleTopMargin"
             end
             if arv.length==0
                 code << "// You need to set frame.size.height\n// You need to set frame.origin.y\n"
