@@ -208,19 +208,19 @@ def objc_gen
         else
             arh = ""
             if exists(view.w)
-                code << "    frame.size.width = #{view.w};\n// You need to set frame.origin.x\n"
+                code << "    frame.size.width = #{view.w};\n    // You need to set frame.origin.x\n"
                 arh = "?"
             end
             if exists(view.x)
-                code << "    frame.origin.x = #{view.code_for_x};\n// You need to set frame.size.width\n"
+                code << "    frame.origin.x = #{view.code_for_x};\n    // You need to set frame.size.width\n"
                 arh = "UIViewAutoresizingFlexibleRightMargin"
             end
             if exists(view.r)
-                code << "    // You need to set frame.size.width\nframe.origin.x = #{view.code_for_right} - frame.size.width;\n"
+                code << "    // You need to set frame.size.width\n    frame.origin.x = #{view.code_for_right} - frame.size.width;\n"
                 arh = "UIViewAutoresizingFlexibleLeftMargin"
             end
             if arh.length==0
-                code << "    // You need to set frame.size.width\n// You need to set frame.origin.x\n"
+                code << "    // You need to set frame.size.width\n    // You need to set frame.origin.x\n"
                 arh = "?"
             end
         end
@@ -240,19 +240,19 @@ def objc_gen
         else
             arv = ""
             if exists(view.h)
-                code << "    frame.size.height = #{view.h};\n// You need to set frame.origin.y\n"
+                code << "    frame.size.height = #{view.h};\n    // You need to set frame.origin.y\n"
                 arv = "?"
             end
             if exists(view.y)
-                code << "    frame.origin.y = #{view.code_for_y};\n// You need to set frame.size.height\n"
+                code << "    frame.origin.y = #{view.code_for_y};\n    // You need to set frame.size.height\n"
                 arv = "UIViewAutoresizingFlexibleBottomMargin"
             end
             if exists(view.b)
-                code << "    // You need to set frame.size.height\nframe.origin.y = #{view.code_for_bottom} - frame.size.height;\n"
+                code << "    // You need to set frame.size.height\n    frame.origin.y = #{view.code_for_bottom} - frame.size.height;\n"
                 arv = "UIViewAutoresizingFlexibleTopMargin"
             end
             if arv.length==0
-                code << "    // You need to set frame.size.height\n// You need to set frame.origin.y\n"
+                code << "    // You need to set frame.size.height\n    // You need to set frame.origin.y\n"
                 arv = "?"
             end
         end
