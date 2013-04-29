@@ -303,8 +303,11 @@ def update_file(path)
     end
 end
 
-if ARGV[0]=="-f"
-    update_file(ARGV[1])
-else
-    puts str2str(ARGV[0])
+
+if __FILE__ == $0
+    if ARGV[0]=="-f"
+        update_file(ARGV[1])
+    else
+        puts str2str(ARGV[0])
+    end
 end
