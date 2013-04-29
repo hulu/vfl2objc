@@ -141,7 +141,7 @@ def parse(vfl)
             treat_element.call(element, true)
         end
     end
-    puts "hash:\n#{HASH}"
+    # puts "hash:\n#{HASH}"
 end
 
 def add_to_list(position, view)
