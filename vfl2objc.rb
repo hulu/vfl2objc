@@ -304,8 +304,8 @@ def update_file(path)
             # find indent
             indent = ""
             i = i_start - 1
-            while code[i]!="\n"  do
-                indent = code[i] + indent
+            while code[i..i]!="\n"  do
+                indent = code[i..i] + indent
                 i = i - 1
             end
 
