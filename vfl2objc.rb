@@ -279,8 +279,14 @@ def str2str(vfl)
 end
 
 def update_file(path)
-    start = "\/\/ \-\-\- VFL"
-    finish = "VFL \-\-\-\n"
+    update_file_with_tokens(path, "\/\/ \-\-\- VFL", "VFL \-\-\-\n")
+    update_file_with_tokens(path, "\/\/ VFL begin", "\/\/ VFL end\n")
+    update_file_with_tokens(path, "\/\/ begin VFL", "\/\/ end VFL\n")
+end
+
+def update_file_with_tokens(path, start, finish)
+    # start = "\/\/ \-\-\- VFL"
+    # finish = "VFL \-\-\-\n"
     vfl_start = "/*\n"
     vfl_finish = "*/"
     last_i_finish = 0
