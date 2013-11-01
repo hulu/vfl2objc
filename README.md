@@ -15,14 +15,14 @@ Then restart Xcode. Click Xcode->services from top menu, you should be able to s
 To start a new VFL based code block, enter something like below in the right place in your code:
 
     UIView* superview = someView;
-    // --- VFL
+    // begin VFL
     /*
         |-10-[someElement]-10-|
         V:|-5-[someElement(100)]
     */
-    // VFL ---
+    // end VFL
 
-Note: the first line and the last line are important. The final "VFL ---" must be followed by a line break(\n).
+Note: the first line and the last line are important. The final "// end VFL" must be followed by a line break(\n). Alternatively you can use "// VFL begin" and "// VFL end"
 
 And then save the file (cmd+s), click vfl-file from the service menu. And the VFL block you entered will expand to a full code block.
 
