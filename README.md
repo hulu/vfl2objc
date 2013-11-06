@@ -59,7 +59,7 @@ Everything else follows Apple's official VFL documentation (https://developer.ap
 
 center[A(200)] means A's width is 200 and A is horizontally centered in its superview.
 
-V:center[B(100)] means B's width is 100 and B is vertically centered in its superview.
+V:center[B(100)] means B's height is 100 and B is vertically centered in its superview.
 
 
 
