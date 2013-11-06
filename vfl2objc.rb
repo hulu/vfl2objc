@@ -65,12 +65,14 @@ def parse(vfl)
             orientation = :horizontal
         end
 
-        if line[/center\(\s*([a-zA-Z0-9_]+)\s*\)/]
+        if line[/center\[([a-zA-Z0-9_]+)\s*(?:\(([a-zA-Z\d]+)[^\)]*\))?\]/]
             view = get_or_create_view($1)
             if orientation == :horizontal
                 view.centerx = true
+                view.w = $2 if $2
             else
                 view.centery = true
+                view.h = $2 if $2
             end
             next
         end
