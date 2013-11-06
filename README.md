@@ -55,6 +55,13 @@ The rule of thumb is that there can be 1 and only 1 flexible element in 1 dimens
 
 Variables and constants can be used to replace the numbers, e.g. |-margin-[button(width)]
 
+Everything else follows Apple's official VFL documentation (https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage/VisualFormatLanguage.html), with one exception: we support "center" before brackets.
+
+center[A(200)] means A's width is 200 and A is horizontally centered in its superview.
+
+V:center[B(100)] means B's width is 100 and B is vertically centered in its superview.
+
+
 
 Frame overriding
 ================
@@ -70,7 +77,7 @@ E.g. you can do
 Or
 
     // generated code based on [itemX(100)]
-    CenterViewX(itemX); // assuming that CenterViewX method makes itemX horizontally centered in its superview
+    UpdateWidthBasedOnSomeLogic(itemX); // this keeps the x, y, height set in the VFL block and just updates the width
 
 But this will not work:
 
