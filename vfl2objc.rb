@@ -88,11 +88,11 @@ def parse(vfl)
             # puts "element: #{element}"
             if element == "|"
                 position = "0"
-            elsif element[/^([a-zA-Z\d]+).*/]
+            elsif element[/^([_a-zA-Z\d]+).*/]
                 if exists(position)
                     position = position + " + " + $1
                 end
-            elsif element[/\[([a-zA-Z0-9_]+)\s*(?:\(([a-zA-Z\d\>]+)[^\)]*\))?\]/]
+            elsif element[/\[([a-zA-Z0-9_]+)\s*(?:\(([_a-zA-Z\d\>]+)[^\)]*\))?\]/]
                 view = get_or_create_view($1)
                 # puts "treatint #{view.name}"
                 if orientation == :horizontal
