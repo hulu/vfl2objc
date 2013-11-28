@@ -10,7 +10,19 @@ Usage
 First set it up by running:
     sudo setup.rb
 
-Then restart Xcode. Click Xcode->services from top menu, you should be able to see vfl-file
+You can use this script to convert raw VFL to code:
+
+   echo "|-10-[someElement]-10-|" | vfl2objc.rb --raw
+
+Or to convert an Objective-C source code file, preserving non-VFL areas. To do so, run either:
+
+    cat yourfile.m | vfl2objc.rb > yourfile_with_changes.m
+
+Or transform it in place:
+
+    vfl2objc.rb -f yourfile.m
+
+You can also integrate the in-place transformation using vfl2objc within Xcode. After installing the script, restart Xcode, then click Xcode -> services from the top menu. You should be able to see the vfl-file service listed under the General section.
 
 To start a new VFL based code block, enter something like below in the right place in your code:
 
@@ -24,11 +36,11 @@ To start a new VFL based code block, enter something like below in the right pla
 
 Note: the first line and the last line are important. The final "// end VFL" must be followed by a line break(\n). Alternatively you can use "// VFL begin" and "// VFL end"
 
-And then save the file (cmd+s), click vfl-file from the service menu. And the VFL block you entered will expand to a full code block.
+And then save the file (Cmd+S), click vfl-file from the service menu. And the VFL block you entered will expand to a full code block.
 
-Each time after editing something in the VFL section, also hit cmd+s and run the vfl-file service, so the code will get updated.
+Each time after editing something in the VFL section, also press Cmd+S and run the vfl-file service, so the code will get updated.
 
-Hint: you can add a keyboard shortcut to the vfl-file menu in System Preference -> Keyboard -> Keyboard Shortcuts
+Hint: you can add a keyboard shortcut to the vfl-file menu in System Preferences -> Keyboard -> Keyboard Shortcuts
 
 Rules
 =====
@@ -98,17 +110,6 @@ E.g.
     V:[button]-|" | vfl2objc.rb --raw
 
 And see the command line output.
-
-Usage
-=====
-
-You can use this script to convert raw VFL to code, or to convert an Objective-C source code file, preserving non-VFL areas. To do so, run either:
-
-    cat yourfile.m | vfl2objc.rb > yourfile_with_changes.m
-
-Or transform it in place:
-
-    vfl2objc.rb -f yourfile.m
 
 
 Further integration
