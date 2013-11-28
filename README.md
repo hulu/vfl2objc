@@ -1,7 +1,7 @@
 Summary
 =======
 
-vfl2objc is a tool to convert VFL (Visual Formatting Language) based UI layout to native objective C code.
+vfl2objc is a tool to convert VFL (Visual Formatting Language) based UI layout to native Objective-C code.
 
 
 Usage
@@ -90,14 +90,25 @@ because itemY's position depends on itemX's frame, so itemX's setWidth call must
 Experimenting
 =============
 
-To experiment with this tool, you can just call: vfl2objc.rb "some vfl code" on command line
+To experiment with this tool, you can just call: echo "some vfl code" | vfl2objc.rb --raw on command line
 
 E.g.
 
-    vfl2objc.rb "|-10-[button]
-    V:[button]-|"
+    echo "|-10-[button]
+    V:[button]-|" | vfl2objc.rb --raw
 
 And see the command line output.
+
+Usage
+=====
+
+You can use this script to convert raw VFL to code, or to convert an Objective-C source code file, preserving non-VFL areas. To do so, run either:
+
+    cat yourfile.m | vfl2objc.rb > yourfile_with_changes.m
+
+Or transform it in place:
+
+    vfl2objc.rb -f yourfile.m
 
 
 Further integration
@@ -109,3 +120,14 @@ To do this:
 1 In Xcode Toolbar, choose your scheme and edit your scheme. (If you use git, you may want to go to "manage scheme" and make your scheme "shared" first, so the scheme config will be in your git repo)
 2 Inside scheme editor, expand "Build", and add a pre-action
 3 Use whatever scripting language to create a script that loops through all your .m files, and call "vfl2objc.rb -f {file_path}"
+
+License
+=======
+
+Copyright (C) 2013 by Hulu, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

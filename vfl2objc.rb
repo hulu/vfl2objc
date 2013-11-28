@@ -27,6 +27,13 @@ PARAMS = {:VFL => ""}
 HASH = {}
 LIST = []
 
+#common beginnings and endings of VFL block comment delimiters (ie // --- VFL... )
+STARTS_AND_ENDS = [
+    ["\/\/ \-\-\- VFL", "VFL \-\-\-\n"],
+    ["\/\/ VFL begin", "\/\/ VFL end\n"],
+    ["\/\/ begin VFL", "\/\/ end VFL\n"]
+]
+
 def get_or_create_view(name)
     if HASH[name]
         return HASH[name]
@@ -289,7 +296,7 @@ def objc_gen
 end
 
 
-def str2str(vfl)
+def transform_raw_code(vfl)
     PARAMS[:VFL] = ""
     HASH.clear
     LIST.clear
@@ -299,34 +306,26 @@ def str2str(vfl)
     objc_gen
 end
 
-def update_file(path)
-    update_file_with_tokens(path, "\/\/ \-\-\- VFL", "VFL \-\-\-\n")
-    update_file_with_tokens(path, "\/\/ VFL begin", "\/\/ VFL end\n")
-    update_file_with_tokens(path, "\/\/ begin VFL", "\/\/ end VFL\n")
-end
-
-def update_file_with_tokens(path, start, finish)
-    # start = "\/\/ \-\-\- VFL"
-    # finish = "VFL \-\-\-\n"
+def transform_delimited_code(input)
+    code = input
     vfl_start = "/*\n"
     vfl_finish = "*/"
     last_i_finish = 0
-    File.open(path, "r") do |f|
-        code = f.read
-        while 1 do
+
+    STARTS_AND_ENDS.each do |start, finish|
+        while true do
             i_start = code.index(start, last_i_finish)
             break unless i_start
             i_finish = code.index(finish, i_start)
             break unless i_finish
             last_i_finish = i_finish
-            puts "detected block: #{i_start} - #{i_finish}"
-
+            $stderr.puts "detected block: #{i_start} - #{i_finish}" if $stdout.isatty 
             i_vfl_start = code.index(vfl_start, i_start)
             i_vfl_end = code.index(vfl_finish, i_vfl_start)
-            puts "vfl: #{i_vfl_start} - #{i_vfl_end}"
+            $stderr.puts "vfl: #{i_vfl_start} - #{i_vfl_end}" if $stdout.isatty 
             vfl =  code[i_vfl_start+vfl_start.length..i_vfl_end-1]
 
-            newcode = str2str(vfl.strip)
+            newcode = transform_raw_code(vfl.strip)
 
             # find indent
             indent = ""
@@ -347,6 +346,19 @@ def update_file_with_tokens(path, start, finish)
             }
             code[i_start..i_finish+finish.length-1] = newcode
         end
+    end
+
+    code
+end
+
+def update_file(path)
+    # start = "\/\/ \-\-\- VFL"
+    # finish = "VFL \-\-\-\n"
+    File.open(path, "r") do |f|
+        code = f.read
+
+        code = transform_delimited_code(code)
+        
         File.open(path, "w") do |f|
             f.write(code)
         end
@@ -355,13 +367,27 @@ end
 
 
 if __FILE__ == $0
-    if ARGV[0]=="-f"
+    if ARGV[0]=="-h"
+        $stderr.puts "Usage: #{$0} [-r|--raw]|[-f filename]"
+        $stderr.puts
+        $stderr.puts " -r, --raw     Treat standard input as raw VFL without comment delimiters"
+        $stderr.puts " -f filename   Transform a file IN PLACE"
+        $stderr.puts
+        $stderr.puts "With no file specified, will transform standard input and output to standard output"
+    elsif ARGV[0]=="-f"
         update_file(ARGV[1])
     else
-        if $stdout.isatty
-            $stderr.puts "E: Reading input from standard in (or use '#{$0} -f filename' to transform a file in place)..."
+        if ARGV[0]=="--raw" or ARGV[0]=="-r"
+            mode = :raw
+        else
+            mode = :delimited
         end
+
         str = STDIN.read
-        puts str2str(str)
+        if mode == :raw
+            puts transform_raw_code(str)
+        else
+            puts transform_delimited_code(str)
+        end
     end
 end
