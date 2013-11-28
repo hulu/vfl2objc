@@ -358,6 +358,10 @@ if __FILE__ == $0
     if ARGV[0]=="-f"
         update_file(ARGV[1])
     else
-        puts str2str(ARGV[0])
+        if $stdout.isatty
+            $stderr.puts "E: Reading input from standard in (or use '#{$0} -f filename' to transform a file in place)..."
+        end
+        str = STDIN.read
+        puts str2str(str)
     end
 end
