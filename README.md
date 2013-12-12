@@ -2,6 +2,16 @@
 
 `vfl2objc` is a tool to convert VFL (Visual Formatting Language) based UI layout to native, frame-based, Objective-C code.
 
+# Table of Contents
+
+1. [Usage](#usage)
+2. [Sample Rules](#sample-rules)
+3. [A rule of thumb](#a-rule-of-thumb)
+4. [Variables and constants](#variables-and-constants)
+5. [Frame overriding](#frame-overriding)
+6. [Command line tools](#command-line-tools)
+7. [Further integration](#further-integration)
+8. [License](#license)
 
 # Usage
 
