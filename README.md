@@ -10,19 +10,7 @@ Usage
 First set it up by running:
     sudo setup.rb
 
-You can use this script to convert raw VFL to code:
-
-   echo "|-10-[someElement]-10-|" | vfl2objc.rb --raw
-
-Or to convert an Objective-C source code file, preserving non-VFL areas. To do so, run either:
-
-    cat yourfile.m | vfl2objc.rb > yourfile_with_changes.m
-
-Or transform it in place:
-
-    vfl2objc.rb -f yourfile.m
-
-You can also integrate the in-place transformation using vfl2objc within Xcode. After installing the script, restart Xcode, then click Xcode -> services from the top menu. You should be able to see the vfl-file service listed under the General section.
+Restart Xcode, then click Xcode -> services from the top menu. You should be able to see the vfl-file service listed under the General section.
 
 To start a new VFL based code block, enter something like below in the right place in your code:
 
@@ -99,17 +87,23 @@ But this will not work:
 because itemY's position depends on itemX's frame, so itemX's setWidth call must go before the generated code block.
 
 
-Experimenting
-=============
+Command line tools
+==================
 
-To experiment with this tool, you can just call: echo "some vfl code" | vfl2objc.rb --raw on command line
-
-E.g.
+You can use this script to convert raw VFL to Objective-C code from command line:
 
     echo "|-10-[button]
     V:[button]-|" | vfl2objc.rb --raw
 
-And see the command line output.
+Or convert an Objective-C source code file, preserving non-VFL areas. To do so, run either:
+
+    cat yourfile.m | vfl2objc.rb > yourfile_with_changes.m
+
+Or transform it in place:
+
+    vfl2objc.rb -f yourfile.m
+
+
 
 
 Further integration
