@@ -1,16 +1,23 @@
-Summary
-=======
+# Summary
 
-vfl2objc is a tool to convert VFL (Visual Formatting Language) based UI layout to native Objective-C code.
+`vfl2objc` is a tool to convert VFL (Visual Formatting Language) based UI layout to native, frame-based, Objective-C code.
 
 
-Usage
-=====
+# Usage
 
-First set it up by running:
-    sudo setup.rb
+## 1. One-time setup
 
-Restart Xcode, then click Xcode -> services from the top menu. You should be able to see the vfl-file service listed under the General section.
+```
+sudo setup.rb
+```
+
+This will copy the necessary files to the necessary folders to integrate nicely with Xcode.
+
+## 2. Restart Xcode and confirm installation
+
+Fist, restart Xcode, then navigate to `Xcode > Services` in the upper left application menu. You should be able to see the vfl-file service listed under the General section.
+
+## 3. Create a VFL code block
 
 To start a new VFL based code block, enter something like below in the right place in your code:
 
@@ -22,69 +29,103 @@ To start a new VFL based code block, enter something like below in the right pla
     */
     // end VFL
 
-Note: the first line and the last line are important. The final "// end VFL" must be followed by a line break(\n). Alternatively you can use "// VFL begin" and "// VFL end"
+*Note:* the first line and the last line are important. The final `// end VFL` must be followed by a LF line break (`\n`). You can also `// VFL begin` and `// VFL end`
 
-And then save the file (Cmd+S), click vfl-file from the service menu. And the VFL block you entered will expand to a full code block.
+## 4. Save, then run the `vfl-file` service
+
+Make sure you save the file (Cmd+S), then navigate to `Xcode > Services > vfl-file` in the upper left application menu. The VFL block you entered will expand to a full code block!
 
 Each time after editing something in the VFL section, also press Cmd+S and run the vfl-file service, so the code will get updated.
 
-Hint: you can add a keyboard shortcut to the vfl-file menu in System Preferences -> Keyboard -> Keyboard Shortcuts
+**Protip:** you can add a keyboard shortcut to the vfl-file menu in `System Preferences > Keyboard > Keyboard Shortcuts`
 
-Rules
-=====
+# Sample Rules
 
-|-5-[A(100)] means that element A is 5 points from the left edge of its container, and it's 100 points wide. And A has flexible right margin.
+```
+|-5-[A(100)]
+```
+This means that element A is 5 points from the left edge of its container, and it's 100 points wide. And A has flexible right margin.
 
-V:|-10-[B(50)] means that element B is 10 points from the top edge and is 50 points tall. (V means vertical). And B has flexible bottom margin.
+```
+V:|-10-[B(50)]
+```
+This means that element B is 10 points from the top edge and is 50 points tall. (V means vertical). And B has flexible bottom margin.
 
-|-5-[C]-5-| means that C has flexible width, and it's 5 points to the left edge and 5 points to the right edge.
+```
+|-5-[C]-5-|
+```
+This means that C has flexible width, and it's 5 points to the left edge and 5 points to the right edge.
 
-V:[D]| means that D is touching the bottom edge, and have a flexible top margin, and D's height should be set beyond the VFL based block (either before or after)
+```
+V:[D]|
+```
+This means that D is touching the bottom edge, and have a flexible top margin, and D's height should be set beyond the VFL based block (either before or after)
 
-|-5-[E]-5-[F(50)]-5-[G(>0)]-5-| means that E has a fixed width set outside the VFL block, F has a fixed width of 50 points, G has a flexible width
+```
+|-5-[E]-5-[F(50)]-5-[G(>0)]-5-|
+```
+This means that E has a fixed width set outside the VFL block, F has a fixed width of 50 points, G has a flexible width
 
-[H(100)] means that H is 100 points wide, and it's position and autoresizing mask is unknown, so you need to set them beyond the VFL block.
+```
+[H(100)]
+```
+This means that H is 100 points wide. However **it's position and autoresizing mask is unknown, so you need to set them beyond the VFL block**.
 
+# A rule of thumb
 
-The rule of thumb is that there can be 1 and only 1 flexible element in 1 dimension, e.g.
+The rule of thumb is that there can be 1 and only 1 flexible element in each dimension:
 
-|-5-[A(100)]-5-| is wrong because when the superview width is not 110 there will be a conflict.
+```
+|-5-[A(100)]-5-|
+```
+This is wrong because when the superview width is not 110 there will be a conflict.
 
-|-5-[A(>0)]-5-[B(>0)]-5-| is wrong because it is unclear on how to assign the widths for A and B.
+```
+|-5-[A(>0)]-5-[B(>0)]-5-|
+```
+This is wrong because it is an ambiguous layout—it is unclear on how to assign the widths for A and B.
 
+# Variables and constants
 
-Variables and constants can be used to replace the numbers, e.g. |-margin-[button(width)]
+Variables and constants can be used to replace the numbers:
 
-Everything else follows Apple's official VFL documentation (https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage/VisualFormatLanguage.html), with one exception: we support "center" before brackets.
+```
+|-margin-[button(width)]
+```
 
-center[A(200)] means A's width is 200 and A is horizontally centered in its superview.
+Everything else follows [Apple's official VFL documentation](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage/VisualFormatLanguage.html), with one exception: `vlf2objc` supports `center` before brackets.
 
-V:center[B(100)] means B's height is 100 and B is vertically centered in its superview.
+```
+center[A(200)]
+```
+This means A's width is 200 and A is horizontally centered in its superview.
 
+```
+V:center[B(100)]
+```
+This means B's height is 100 and B is vertically centered in its superview.
 
+# Frame overriding
 
-Frame overriding
-================
+**Unlike** Cocoa Autolayout, `vfl2objc` allows you to override the frame of an element before or after the generated code block.
 
-Unlike Cocoa Autolayout, vfl2objc allows you to override the frame of an element before or after the generated code block.
-
-E.g. you can do
+For example this is valid allowed:
 
     labelA.text = @"hi";
     [labelA sizeToFit];
     // generated code based on |-[labelA]-10-[itemB] 
 
-Or
+This is also valid and allowed:
 
     // generated code based on [itemX(100)]
     UpdateWidthBasedOnSomeLogic(itemX); // this keeps the x, y, height set in the VFL block and just updates the width
 
-But this will not work:
+However, the following example will not work:
 
     // generated code based on |[itemX]-[itemY(100)]
     [itemX setWidth:100];
 
-because itemY's position depends on itemX's frame, so itemX's setWidth call must go before the generated code block.
+`itemY`'s position depends on `itemX`'s frame, so `itemX`'s `setWidth` call must go before the generated code block.
 
 
 Command line tools
@@ -103,18 +144,18 @@ Or transform it in place:
 
     vfl2objc.rb -f yourfile.m
 
-
-
-
 Further integration
 ===================
 
 Other than manually triggering the script with Mac Service, you can consider to integrate VFL code generation into pre-build script.
 
 To do this:
-1 In Xcode Toolbar, choose your scheme and edit your scheme. (If you use git, you may want to go to "manage scheme" and make your scheme "shared" first, so the scheme config will be in your git repo)
-2 Inside scheme editor, expand "Build", and add a pre-action
-3 Use whatever scripting language to create a script that loops through all your .m files, and call "vfl2objc.rb -f {file_path}"
+
+1. In Xcode Toolbar, choose your scheme and edit your scheme.
+
+    **Protip:** If you use git, you may want to go to "manage scheme" and make your scheme "shared" first, so the scheme config will be in your git repo.
+2. Inside scheme editor, expand "Build", and add a pre-action
+3. Use whatever scripting language to create a script that loops through all your `.m` files, and call `vfl2objc.rb -f {file_path}`
 
 License
 =======
