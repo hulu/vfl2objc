@@ -72,7 +72,7 @@ def parse(vfl)
             orientation = :horizontal
         end
 
-        if line[/center\[([a-zA-Z0-9_]+)\s*(?:\(([a-zA-Z\d]+)[^\)]*\))?\]/]
+        if line[/center\[([a-zA-Z0-9_\.]+)\s*(?:\(([a-zA-Z\d]+)[^\)]*\))?\]/]
             view = get_or_create_view($1)
             if orientation == :horizontal
                 view.centerx = true
@@ -96,10 +96,12 @@ def parse(vfl)
             if element == "|"
                 position = "0"
             elsif element[/^([_a-zA-Z\d]+).*/]
+                # get number between elements
                 if exists(position)
                     position = position + " + " + $1
                 end
-            elsif element[/\[([a-zA-Z0-9_]+)\s*(?:\(([_a-zA-Z\d\>]+)[^\)]*\))?\]/]
+            elsif element[/\[([a-zA-Z0-9_\.]+)\s*(?:\(([_a-zA-Z\d\>]+)[^\)]*\))?\]/]
+                # get element in brackets (possibly with number in paren)
                 view = get_or_create_view($1)
                 # puts "treatint #{view.name}"
                 if orientation == :horizontal
