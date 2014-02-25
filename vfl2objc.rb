@@ -315,6 +315,8 @@ def transform_delimited_code(input)
     last_i_finish = 0
 
     STARTS_AND_ENDS.each do |start, finish|
+        $stderr.puts "checking blocks between #{start} and #{finish}"
+        last_i_finish = 0
         while true do
             i_start = code.index(start, last_i_finish)
             break unless i_start
