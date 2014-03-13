@@ -72,7 +72,7 @@ def parse(vfl)
             orientation = :horizontal
         end
 
-        if line[/center\[([a-zA-Z0-9_]+)\s*(?:\(([a-zA-Z\d]+)[^\)]*\))?\]/]
+        if line[/center\[([a-zA-Z0-9_\.]+)\s*(?:\(([a-zA-Z\d]+)[^\)]*\))?\]/]
             view = get_or_create_view($1)
             if orientation == :horizontal
                 view.centerx = true
@@ -96,10 +96,12 @@ def parse(vfl)
             if element == "|"
                 position = "0"
             elsif element[/^([_a-zA-Z\d]+).*/]
+                # get number between elements
                 if exists(position)
                     position = position + " + " + $1
                 end
-            elsif element[/\[([a-zA-Z0-9_]+)\s*(?:\(([_a-zA-Z\d\>]+)[^\)]*\))?\]/]
+            elsif element[/\[([a-zA-Z0-9_\.]+)\s*(?:\(([_a-zA-Z\d\>]+)[^\)]*\))?\]/]
+                # get element in brackets (possibly with number in paren)
                 view = get_or_create_view($1)
                 # puts "treatint #{view.name}"
                 if orientation == :horizontal
@@ -313,6 +315,8 @@ def transform_delimited_code(input)
     last_i_finish = 0
 
     STARTS_AND_ENDS.each do |start, finish|
+        $stderr.puts "checking blocks between #{start} and #{finish}"
+        last_i_finish = 0
         while true do
             i_start = code.index(start, last_i_finish)
             break unless i_start
